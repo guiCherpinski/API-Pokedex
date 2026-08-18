@@ -1,7 +1,11 @@
 package com.pokedex.api_pokedex.controller;
 
-import com.pokedex.api_pokedex.Evolucao;
+
 import com.pokedex.api_pokedex.entity.Pokemon;
+import com.pokedex.api_pokedex.enums.Evolucao;
+import com.pokedex.api_pokedex.enums.Tipo;
+import com.pokedex.api_pokedex.enums.Treinador;
+import com.pokedex.api_pokedex.service.PokemonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -26,22 +30,9 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/v1/pokemons")
-public class ApiPokedexController {
+public class PokemonController {
 
-
-    ArrayList<Pokemon> pokemons = new ArrayList<>();
-    static Long proximoId = 1L;
-
-    public ApiPokedexController() {
-        pokemons.add(new Pokemon(proximoId++,"Pikachu","Elétrico",250,70, Evolucao.TERCEIRA_EVOLUCAO,159));
-        pokemons.add(new Pokemon(proximoId++,"Charmander","Fogo",135,21, Evolucao.PRIMEIRA_EVOLUCAO,110));
-        pokemons.add(new Pokemon(proximoId++,"Lucário","Lutador",280,70, Evolucao.TERCEIRA_EVOLUCAO,179));
-        pokemons.add(new Pokemon(proximoId++,"Magikarp","Água",15,8, Evolucao.PRIMEIRA_EVOLUCAO,112));
-        pokemons.add(new Pokemon(proximoId++,"Dugtrio","Normal",110,56, Evolucao.TERCEIRA_EVOLUCAO,76));
-        pokemons.add(new Pokemon(proximoId++,"Arceus","Normal",330,100,Evolucao.TERCEIRA_EVOLUCAO,280));
-
-    }
-
+    PokemonService service = new PokemonService();
     /**
      * Lista de pokemons
      *
@@ -65,7 +56,7 @@ public class ApiPokedexController {
     )
     @GetMapping()
     public ArrayList<Pokemon> listarPokemons() {
-        return pokemons;
+        return service.listarPokemons();
     }
 
     /**
@@ -91,13 +82,7 @@ public class ApiPokedexController {
     )
     @GetMapping("/{id}")
     public Pokemon buscarPokemonId(@PathVariable Long id) {
-        for(Pokemon p : pokemons) {
-            if (p.getId() == id) {
-                return p;
-            }
-        }
-
-        return null;
+        return service.buscarPokemonId(id);
     }
 
     /**
@@ -122,9 +107,7 @@ public class ApiPokedexController {
     )
     @PostMapping()
     public Pokemon cadastrarPokemon(@RequestBody Pokemon pokemon){
-
-        pokemons.add(pokemon);
-        return pokemon;
+        return service.cadastrarPokemon(pokemon);
     }
 
     /**
@@ -150,21 +133,7 @@ public class ApiPokedexController {
     )
     @PutMapping("/{id}")
     public Pokemon atualizarDados(@PathVariable Long id, @RequestBody Pokemon pokemon) {
-
-        for (Pokemon p : pokemons) {
-            if (p.getId() == id) {
-                p.setId(pokemon.getId());
-                p.setNome(pokemon.getNome());
-                p.setTipo(pokemon.getTipo());
-                p.setVida(pokemon.getVida());
-                p.setNivel(pokemon.getNivel());
-                p.setEvolucao(p.getEvolucao());
-
-                return p;
-            }
-        }
-
-        return null;
+        return service.atualizarDados(id,pokemon);
     }
 
     /**
@@ -189,15 +158,7 @@ public class ApiPokedexController {
     )
     @DeleteMapping("/{id}")
     public Pokemon deletarPokemon (@PathVariable Long id) {
-
-        for(Pokemon p : pokemons) {
-            if (p.getId() == id) {
-                pokemons.remove(p);
-                return p;
-            }
-        }
-
-        return null;
+        return service.deletarPokemon(id);
     }
 
     /**
@@ -223,14 +184,7 @@ public class ApiPokedexController {
     )
     @GetMapping("/tipo")
     public ArrayList<Pokemon> listarPokemonsTipo (@RequestParam String tipo) {
-        ArrayList<Pokemon> pokemonsEncontrados = new ArrayList<>();
-
-        for (Pokemon p : pokemons){
-            if (p.getTipo().equals(tipo)){
-                pokemonsEncontrados.add(p);
-            }
-        }
-        return pokemonsEncontrados;
+        return service.listarPokemonsTipo(tipo);
     }
 
     /**
@@ -256,13 +210,7 @@ public class ApiPokedexController {
     )
     @GetMapping("/nome")
     public Pokemon listarPokemonsNome(@RequestParam String nome){
-
-        for (Pokemon p : pokemons){
-            if (p.getNome().equals(nome)){
-                return p;
-            }
-        }
-        return null;
+        return service.listarPokemonsNome(nome);
     }
 
     /**
@@ -288,14 +236,7 @@ public class ApiPokedexController {
     )
     @GetMapping("/nivel")
     public ArrayList<Pokemon> listarPorNivel(@RequestParam int nivel){
-        ArrayList<Pokemon> pokemonsEncontrados = new ArrayList<>();
-
-        for (Pokemon p : pokemons){
-            if (p.getNivel() > nivel){
-                pokemonsEncontrados.add(p);
-            }
-        }
-        return pokemonsEncontrados;
+        return service.listarPorNivel(nivel);
     }
 
     /**
@@ -321,14 +262,7 @@ public class ApiPokedexController {
     )
     @PatchMapping("{id}/nivel")
     public Pokemon atualizarONivel(@PathVariable Long id, @RequestBody Pokemon pokemon){
-
-        for (Pokemon p : pokemons){
-            if (p.getId().equals(id)){
-                p.setNivel(pokemon.getNivel());
-                return p;
-            }
-        }
-        return null;
+        return service.atualizarONivel(id, pokemon);
     }
 
     /**
@@ -354,15 +288,7 @@ public class ApiPokedexController {
     )
     @PostMapping("{id}/curar")
     public Pokemon curarPokemon (@PathVariable Long id, @RequestBody Pokemon pokemon){
-
-        for (Pokemon p : pokemons){
-            if (p.getId().equals(id)){
-                p.setVida(p.getVida()+ pokemon.getVida());
-
-                return p;
-            }
-        }
-        return null;
+        return service.curarPokemon(id, pokemon);
     }
 
     /**
@@ -390,16 +316,7 @@ public class ApiPokedexController {
     })
     @PostMapping("{id}/evoluir")
     public Pokemon evouluirPokemon (@PathVariable Long id, @RequestBody Pokemon pokemon){
-
-        for (Pokemon p : pokemons){
-            if (p.getId().equals(id)){
-                p.setEvolucao(pokemon.getEvolucao());
-                p.setNome(pokemon.getNome());
-
-                return p;
-            }
-        }
-        return null;
+        return service.evouluirPokemon(id, pokemon);
     }
 
     /**
@@ -426,17 +343,8 @@ public class ApiPokedexController {
     })
     @GetMapping("/mais-forte")
     public Pokemon pokemonMaisForte() {
-
-        int ataqueMaisforte = 0;
-        Pokemon pokemonMaisforte = null;
-
-        for (Pokemon p : pokemons){
-            if (p.getAtaque() > ataqueMaisforte){
-
-                pokemonMaisforte = p;
-                ataqueMaisforte = p.getAtaque();
-            }
-        }
-        return pokemonMaisforte;
+        return service.pokemonMaisForte();
     }
 }
+
+

@@ -1,37 +1,70 @@
 package com.pokedex.api_pokedex.entity;
 
-import com.pokedex.api_pokedex.Evolucao;
+import com.pokedex.api_pokedex.enums.Evolucao;
+import com.pokedex.api_pokedex.enums.Status;
+import com.pokedex.api_pokedex.enums.Tipo;
+import com.pokedex.api_pokedex.enums.Treinador;
+
+import java.util.ArrayList;
 
 public class Pokemon {
     private Long id;
     private String nome;
-    private String tipo;
+    private String apelido;
+    private Tipo tipo1;
+    private Tipo tipo2;
     private int vida;
     private int nivel;
     private Evolucao evolucao;
+    private int defesa;
     private int ataque;
+    private int velocidade;
+    private Treinador treinador;
+    private Status status;
 
-    public Pokemon() {
+    public Pokemon () {
 
     }
 
-    public Pokemon(Long id, String nome, String tipo, int vida, int nivel, Evolucao evolucao, int ataque) {
+    public Pokemon(Long id, String nome, String apelido, Tipo tipo1, Tipo tipo2 , int vida, int nivel, Evolucao evolucao,
+                   int defesa, int ataque, int velocidade, Treinador treinador, Status status) {
         this.id = id;
         this.nome = nome;
-        this.tipo = tipo;
+        this.apelido = apelido;
+        this.tipo1 = tipo1;
+        this.tipo2 = tipo2;
         this.vida = vida;
         this.nivel = nivel;
         this.evolucao = evolucao;
+        this.defesa = defesa;
         this.ataque = ataque;
+        this.velocidade = velocidade;
+        this.treinador = treinador;
+        this.status = status;
     }
 
-    public Pokemon(String nome, String tipo, int vida, int nivel, Evolucao evolucao, int ataque) {
+    public Pokemon(String nome, String apelido,Tipo tipo1,Tipo tipo2, int vida, int nivel, Evolucao evolucao,
+                   int defesa, int ataque, int velocidade, Treinador treinador, Status status) {
         this.nome = nome;
-        this.tipo = tipo;
+        this.apelido = apelido;
+        this.tipo1 = tipo1;
+        this.tipo2 = tipo2;
         this.vida = vida;
         this.nivel = nivel;
         this.evolucao = evolucao;
+        this.defesa = defesa;
         this.ataque = ataque;
+        this.velocidade = velocidade;
+        this.treinador = treinador;
+        this.status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Long getId() {
@@ -50,12 +83,28 @@ public class Pokemon {
         this.nome = nome;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
+    }
+
+    public Tipo getTipo1() {
+        return tipo1;
+    }
+
+    public void setTipo1(Tipo tipo1) {
+        this.tipo1 = tipo1;
+    }
+
+    public Tipo getTipo2() {
+        return tipo2;
+    }
+
+    public void setTipo2(Tipo tipo2) {
+        this.tipo2 = tipo2;
     }
 
     public int getVida() {
@@ -82,11 +131,35 @@ public class Pokemon {
         this.evolucao = evolucao;
     }
 
+    public int getDefesa() {
+        return defesa;
+    }
+
+    public void setDefesa(int defesa) {
+        this.defesa = defesa;
+    }
+
     public int getAtaque() {
         return ataque;
     }
 
     public void setAtaque(int ataque) {
         this.ataque = ataque;
+    }
+
+    public int getVelocidade() {
+        return velocidade;
+    }
+
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
+    }
+
+    public Treinador getTreinador() {
+        return treinador;
+    }
+
+    public void setTreinador(Treinador treinador) {
+        this.treinador = treinador;
     }
 }

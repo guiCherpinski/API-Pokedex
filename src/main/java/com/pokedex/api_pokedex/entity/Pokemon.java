@@ -193,7 +193,11 @@ public class Pokemon {
         return nomePocao + " foi usada no pokemon " + nomePokemon + " adicionado " + vida + " de vida";
     }
 
-    public String evoluir(String nomePokemon, String evolucao) {
-        return nomePokemon + " evoluiu para sua " + evolucao;
+    public String evoluir(String nomePokemon, Evolucao evolucao, String evo) {
+        return nomePokemon + " evoluiu para sua " + evolucao + " e virou " + evo;
+    }
+
+    public String subirNivel (String nome, int level) {
+        return nome + " subiu para o LV " + level;
     }
 }

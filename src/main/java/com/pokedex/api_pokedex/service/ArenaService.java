@@ -171,7 +171,7 @@ public class ArenaService {
                     p.setVelocidade(pokemon.getVelocidade());
                     p.setApelido(pokemon.getApelido());
 
-                    return nome + " evoluiu para " + pokemon.getNome();
+                    return p.evoluir(nome,p.getEvolucao(),p.getNome());
                 }
 
                 if (p.getEvolucao() == Evolucao.PRIMEIRA_EVOLUCAO) {
@@ -184,7 +184,7 @@ public class ArenaService {
                     p.setVelocidade(pokemon.getVelocidade());
                     p.setApelido(pokemon.getApelido());
 
-                    return nome + " evoluiu para " + pokemon.getNome();
+                    return p.evoluir(nome,p.getEvolucao(), p.getNome());
                 }
 
                 if (p.getEvolucao() == Evolucao.SEGUNDA_EVOLUCAO) {
@@ -197,9 +197,57 @@ public class ArenaService {
                     p.setVelocidade(pokemon.getVelocidade());
                     p.setApelido(pokemon.getApelido());
 
-                    return nome + " evoluiu para " + pokemon.getNome();
+                    return p.evoluir(nome,p.getEvolucao(),p.getNome());
                 }
             }
+        }
+
+        return null;
+    }
+
+    public String subirNivel (Long id , Candys candys) {
+
+        try {
+            for (Pokemon p : pokemonService.listarPokemons()) {
+                if (id.equals(p.getId())) {
+
+                    if (p.getNivel() >= 100) {
+                        throw new RuntimeException("ERRO - LEVEL MAXIMO JA ATINGIDO!");
+                    }
+
+                    if (candys == Candys.DOCE_PEQUENO) {
+                        p.setNivel(p.getNivel() + 2);
+                    }
+
+                    if (candys == Candys.DOCE_MEDIO) {
+                        p.setNivel(p.getNivel() + 4);
+                    }
+
+                    if (candys == Candys.DOCE_GRANDE) {
+                        p.setNivel(p.getNivel() + 6);
+                    }
+
+                    if (candys == Candys.DOCE_EXTRA_GRANDE) {
+                        p.setNivel(p.getNivel() + 8);
+                    }
+
+                    if (candys == Candys.DOCE_GIGA) {
+                        p.setNivel(p.getNivel() + 10);
+                    }
+
+                    if (candys == Candys.RARE_CANDY) {
+                        p.setNivel(p.getNivel() + 12);
+                    }
+
+                    if (p.getNivel() > 100) {
+                        p.setNivel(100);
+                    }
+
+                    return p.subirNivel(p.getNome(),p.getNivel());
+                }
+            }
+        } catch (RuntimeException e) {
+            return e.getMessage();
         }
 
         return null;

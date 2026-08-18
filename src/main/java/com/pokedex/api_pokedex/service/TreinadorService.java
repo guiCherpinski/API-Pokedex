@@ -3,6 +3,7 @@ package com.pokedex.api_pokedex.service;
 import com.pokedex.api_pokedex.entity.Pokemon;
 import com.pokedex.api_pokedex.entity.TreinadorPokemon;
 import com.pokedex.api_pokedex.enums.Direcao;
+import com.pokedex.api_pokedex.enums.Time;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ public class TreinadorService {
     static Long proximoId = 1L;
 
     public TreinadorService() {
-        treinadores.add(new TreinadorPokemon(proximoId++,"ASH","Pallet",null,null,"Fire"));
-        treinadores.add(new TreinadorPokemon(proximoId++,"BROCK","Kanto",null,null,"Blue"));
-        treinadores.add(new TreinadorPokemon(proximoId++,"SERENA","Hoenn",null,null,"Yellow"));
+        treinadores.add(new TreinadorPokemon(proximoId++,"ASH","Pallet",null, Time.RED));
+        treinadores.add(new TreinadorPokemon(proximoId++,"BROCK","Kanto",null,Time.BLUE));
+        treinadores.add(new TreinadorPokemon(proximoId++,"SERENA","Hoenn",null,null));
     }
 
     public ArrayList<TreinadorPokemon> listarTreinadores() {
@@ -52,6 +53,42 @@ public class TreinadorService {
             return e.getMessage();
         }
 
+        return null;
+    }
+
+    public String time(Long id, Time time){
+
+        try {
+
+            for (TreinadorPokemon t : treinadores){
+                if (id.equals(t.getId())){
+
+                    if(t.getTime() != null){
+                        throw new RuntimeException("ERRO - O treinador já possui um time");
+                    }
+
+                    if (t.getTime() == null){
+                        switch (time){
+                            case RED -> {
+                                t.setTime(Time.RED);
+                                return t.timeTreinador(t.getNome(),t.getTime());
+                            }
+                            case YELLOOW -> {
+                                t.setTime(Time.YELLOOW);
+                                return t.timeTreinador(t.getNome(),t.getTime());
+                            }
+                            case BLUE -> {
+                                t.setTime(Time.BLUE);
+                                return t.timeTreinador(t.getNome(),t.getTime());
+                            }
+                        }
+                    }
+                }
+            }
+
+        } catch (RuntimeException e){
+            return e.getMessage();
+        }
         return null;
     }
 }

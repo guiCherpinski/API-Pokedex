@@ -12,7 +12,7 @@ public class ArenaService {
     PokemonService pokemonService = new PokemonService();
     Random gerador = new Random();
     static Pokemon pokemon2 = new Pokemon(67L,"Rayquaza","Verdão", Tipo.DRAGAO
-            ,Tipo.VOADOR,230,70, Evolucao.MEGA_EVOLUCAO,80,110,370, Treinador.BROCK, Status.BATALHANDO);
+            ,Tipo.VOADOR,230,70, Evolucao.MEGA_EVOLUCAO,80,110,370, null, Status.BATALHANDO);
 
     public String atacar(Long p1){
 
@@ -145,111 +145,6 @@ public class ArenaService {
                 }
             }
         }
-        return null;
-    }
-
-    public String evoluirPokemon (Long id, Pokemon pokemon) {
-
-        String nome = "";
-
-        for (Pokemon p : pokemonService.listarPokemons()) {
-            if (id.equals(p.getId())) {
-
-                nome = p.getNome();
-
-                if (p.getEvolucao() == Evolucao.MEGA_EVOLUCAO) {
-                    throw new RuntimeException("ERRO - IMPOSSIVEL EVOLUIR UMA MEGA EVOLUÇÃO");
-                }
-
-                if (p.getEvolucao() == Evolucao.BASE) {
-                    p.setNome(pokemon.getNome());
-                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
-                    p.setAtaque(pokemon.getAtaque());
-                    p.setVida(pokemon.getVida());
-                    p.setDefesa(pokemon.getDefesa());
-                    p.setTipo2(pokemon.getTipo2());
-                    p.setVelocidade(pokemon.getVelocidade());
-                    p.setApelido(pokemon.getApelido());
-
-                    return p.evoluir(nome,p.getEvolucao(),p.getNome());
-                }
-
-                if (p.getEvolucao() == Evolucao.PRIMEIRA_EVOLUCAO) {
-                    p.setNome(pokemon.getNome());
-                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
-                    p.setAtaque(pokemon.getAtaque());
-                    p.setVida(pokemon.getVida());
-                    p.setDefesa(pokemon.getDefesa());
-                    p.setTipo2(pokemon.getTipo2());
-                    p.setVelocidade(pokemon.getVelocidade());
-                    p.setApelido(pokemon.getApelido());
-
-                    return p.evoluir(nome,p.getEvolucao(), p.getNome());
-                }
-
-                if (p.getEvolucao() == Evolucao.SEGUNDA_EVOLUCAO) {
-                    p.setNome(pokemon.getNome());
-                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
-                    p.setAtaque(pokemon.getAtaque());
-                    p.setVida(pokemon.getVida());
-                    p.setDefesa(pokemon.getDefesa());
-                    p.setTipo2(pokemon.getTipo2());
-                    p.setVelocidade(pokemon.getVelocidade());
-                    p.setApelido(pokemon.getApelido());
-
-                    return p.evoluir(nome,p.getEvolucao(),p.getNome());
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public String subirNivel (Long id , Candys candys) {
-
-        try {
-            for (Pokemon p : pokemonService.listarPokemons()) {
-                if (id.equals(p.getId())) {
-
-                    if (p.getNivel() >= 100) {
-                        throw new RuntimeException("ERRO - LEVEL MAXIMO JA ATINGIDO!");
-                    }
-
-                    if (candys == Candys.DOCE_PEQUENO) {
-                        p.setNivel(p.getNivel() + 2);
-                    }
-
-                    if (candys == Candys.DOCE_MEDIO) {
-                        p.setNivel(p.getNivel() + 4);
-                    }
-
-                    if (candys == Candys.DOCE_GRANDE) {
-                        p.setNivel(p.getNivel() + 6);
-                    }
-
-                    if (candys == Candys.DOCE_EXTRA_GRANDE) {
-                        p.setNivel(p.getNivel() + 8);
-                    }
-
-                    if (candys == Candys.DOCE_GIGA) {
-                        p.setNivel(p.getNivel() + 10);
-                    }
-
-                    if (candys == Candys.RARE_CANDY) {
-                        p.setNivel(p.getNivel() + 12);
-                    }
-
-                    if (p.getNivel() > 100) {
-                        p.setNivel(100);
-                    }
-
-                    return p.subirNivel(p.getNome(),p.getNivel());
-                }
-            }
-        } catch (RuntimeException e) {
-            return e.getMessage();
-        }
-
         return null;
     }
 }

@@ -1,7 +1,6 @@
 package com.pokedex.api_pokedex.entity;
 
 import com.pokedex.api_pokedex.enums.Tipo;
-import com.pokedex.api_pokedex.enums.Treinador;
 
 import java.util.ArrayList;
 
@@ -9,11 +8,11 @@ public class Arena {
     private int id;
     private String nome;
     private Tipo tipoArena;
-    private Treinador lider;
-    private Treinador treinador;
+    private TreinadorPokemon lider;
+    private TreinadorPokemon treinador;
     private ArrayList<Pokemon> pokemons;
 
-    public Arena(int id, String nome, Tipo tipoArena, Treinador lider, Treinador treinador, ArrayList<Pokemon> pokemons) {
+    public Arena(int id, String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, ArrayList<Pokemon> pokemons) {
         this.id = id;
         this.nome = nome;
         this.tipoArena = tipoArena;
@@ -22,7 +21,7 @@ public class Arena {
         this.pokemons = pokemons;
     }
 
-    public Arena(String nome, Tipo tipoArena, Treinador lider, Treinador treinador, ArrayList<Pokemon> pokemons) {
+    public Arena(String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, ArrayList<Pokemon> pokemons) {
         this.nome = nome;
         this.tipoArena = tipoArena;
         this.lider = lider;
@@ -54,19 +53,19 @@ public class Arena {
         this.tipoArena = tipoArena;
     }
 
-    public Treinador getLider() {
+    public TreinadorPokemon getLider() {
         return lider;
     }
 
-    public void setLider(Treinador lider) {
+    public void setLider(TreinadorPokemon lider) {
         this.lider = lider;
     }
 
-    public Treinador getTreinador() {
+    public TreinadorPokemon getTreinador() {
         return treinador;
     }
 
-    public void setTreinador(Treinador treinador) {
+    public void setTreinador(TreinadorPokemon treinador) {
         this.treinador = treinador;
     }
 

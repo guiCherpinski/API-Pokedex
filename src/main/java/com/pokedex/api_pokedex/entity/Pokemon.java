@@ -1,11 +1,6 @@
 package com.pokedex.api_pokedex.entity;
 
-import com.pokedex.api_pokedex.enums.Evolucao;
-import com.pokedex.api_pokedex.enums.Status;
-import com.pokedex.api_pokedex.enums.Tipo;
-import com.pokedex.api_pokedex.enums.Treinador;
-
-import java.util.ArrayList;
+import com.pokedex.api_pokedex.enums.*;
 
 public class Pokemon {
     private Long id;
@@ -19,7 +14,7 @@ public class Pokemon {
     private int defesa;
     private int ataque;
     private int velocidade;
-    private Treinador treinador;
+    private TreinadorPokemon treinador;
     private Status status;
 
     public Pokemon () {
@@ -27,7 +22,7 @@ public class Pokemon {
     }
 
     public Pokemon(Long id, String nome, String apelido, Tipo tipo1, Tipo tipo2 , int vida, int nivel, Evolucao evolucao,
-                   int defesa, int ataque, int velocidade, Treinador treinador, Status status) {
+                   int defesa, int ataque, int velocidade, TreinadorPokemon treinador, Status status) {
         this.id = id;
         this.nome = nome;
         this.apelido = apelido;
@@ -43,8 +38,8 @@ public class Pokemon {
         this.status = status;
     }
 
-    public Pokemon(String nome, String apelido,Tipo tipo1,Tipo tipo2, int vida, int nivel, Evolucao evolucao,
-                   int defesa, int ataque, int velocidade, Treinador treinador, Status status) {
+    public Pokemon(String nome, String apelido, Tipo tipo1, Tipo tipo2, int vida, int nivel, Evolucao evolucao,
+                   int defesa, int ataque, int velocidade, TreinadorPokemon treinador, Status status) {
         this.nome = nome;
         this.apelido = apelido;
         this.tipo1 = tipo1;
@@ -155,11 +150,11 @@ public class Pokemon {
         this.velocidade = velocidade;
     }
 
-    public Treinador getTreinador() {
+    public TreinadorPokemon getTreinador() {
         return treinador;
     }
 
-    public void setTreinador(Treinador treinador) {
+    public void setTreinador(TreinadorPokemon treinador) {
         this.treinador = treinador;
     }
 
@@ -199,5 +194,9 @@ public class Pokemon {
 
     public String subirNivel (String nome, int level) {
         return nome + " subiu para o LV " + level;
+    }
+
+    public String movimentar(String nome , Direcao direcao){
+        return "O pokemon " + nome + " se movimentou para " + direcao;
     }
 }

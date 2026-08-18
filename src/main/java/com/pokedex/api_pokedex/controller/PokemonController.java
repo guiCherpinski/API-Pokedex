@@ -2,15 +2,13 @@ package com.pokedex.api_pokedex.controller;
 
 
 import com.pokedex.api_pokedex.entity.Pokemon;
-import com.pokedex.api_pokedex.enums.Evolucao;
-import com.pokedex.api_pokedex.enums.Tipo;
-import com.pokedex.api_pokedex.enums.Treinador;
+import com.pokedex.api_pokedex.enums.Candys;
+import com.pokedex.api_pokedex.enums.Direcao;
 import com.pokedex.api_pokedex.service.PokemonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -348,6 +346,21 @@ public class PokemonController {
     @GetMapping("/mais-forte")
     public Pokemon pokemonMaisForte() {
         return service.pokemonMaisForte();
+    }
+
+    @PatchMapping("/evoluir-pokemon/{id}")
+    public String evoluirPokemon(@PathVariable Long id, @RequestBody Pokemon pokemon) {
+        return service.evoluirPokemon(id,pokemon);
+    }
+
+    @PatchMapping("/subir-nivel/{id}")
+    public String subirNivelPokemon(@PathVariable Long id, @RequestBody Candys candys) {
+        return service.subirNivel(id,candys);
+    }
+
+    @PutMapping("/movimentar/{id}")
+    public String movimentarPokemon(@PathVariable Long id, @RequestBody Direcao direcao){
+        return service.movimentarPokemon(id,direcao);
     }
 }
 

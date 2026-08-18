@@ -187,4 +187,9 @@ public class Pokemon {
 
         return nomeBateu + " desmaiou o " + nomeDesmaiou + " com seu ataque";
     }
+
+    public String usarItem(String nomePocao,String nomePokemon, int vida){
+
+        return nomePocao + " foi usada no pokemon " + nomePokemon + " adicionado " + vida + " de vida";
+    }
 }

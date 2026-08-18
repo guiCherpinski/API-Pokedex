@@ -1,6 +1,7 @@
 package com.pokedex.api_pokedex.controller;
 
 import com.pokedex.api_pokedex.entity.Pokemon;
+import com.pokedex.api_pokedex.enums.Item;
 import com.pokedex.api_pokedex.service.ArenaService;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class ArenaController {
     }
 
     @PatchMapping("/usar-item/{id}")
-    public int usarItem(@RequestBody Pokemon pokemon , @PathVariable Long id) {
-        return arenaService.usarItem(pokemon,id);
+    public String usarItem(@RequestBody Item item , @PathVariable Long id) {
+        return arenaService.usarItem(id,item);
     }
 }

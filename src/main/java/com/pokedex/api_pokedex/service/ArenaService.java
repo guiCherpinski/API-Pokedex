@@ -1,10 +1,7 @@
 package com.pokedex.api_pokedex.service;
 
 import com.pokedex.api_pokedex.entity.Pokemon;
-import com.pokedex.api_pokedex.enums.Evolucao;
-import com.pokedex.api_pokedex.enums.Status;
-import com.pokedex.api_pokedex.enums.Tipo;
-import com.pokedex.api_pokedex.enums.Treinador;
+import com.pokedex.api_pokedex.enums.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -129,7 +126,25 @@ public class ArenaService {
         return null;
     }
 
-    public int usarItem(Pokemon pokemon , Long id){
+    public String usarItem(Long id, Item item){
 
+        for (Pokemon p : pokemonService.listarPokemons()) {
+            if (id.equals(p.getId())){
+
+                if (item == Item.POCAO){
+                    p.setVida(p.getVida() + 20);
+                    return p.usarItem("POÇÃO",p.getNome(),20);
+                }
+                if (item == Item.SUPER_POCAO){
+                    p.setVida(p.getVida() + 40);
+                    return p.usarItem("SUPER_POÇÃO",p.getNome(),40);
+                }
+                if (item == Item.HIPER_POCAO){
+                    p.setVida(p.getVida() + 60);
+                    return p.usarItem("SUPER_POÇÃO",p.getNome(),60);
+                }
+            }
+        }
+        return null;
     }
 }

@@ -24,26 +24,26 @@ public class ArenaService {
         for (Pokemon p : pokemonService.listarPokemons()) {
             if (p1.equals(p.getId())) {
                 pokemon1 = p;
-                pokemon1.setStatus(Status.BATALHANDO);
-            } else {
-                throw new RuntimeException("Erro - pokemon inexistente");
+                break;
             }
-            if (pokemon1.getVida() <= 0) {
-                throw new RuntimeException("ERRO - POKEMON ESTÁ DESMAIADO E NÃO PODE ATACAR!");
-            }
-            if (pokemon2 == null) {
-                throw new RuntimeException("ERRO - DEVE HAVER UM POKEMON PARA EXECUTAR O ATAQUE");
-            }
-            if (pokemon2.getVida() <= 0){
-                throw new RuntimeException("ERRO - NÃO É POSSIVEL ATACAR UM POKEMON DESMAIADO");
-            }
-
-            danoCausado = pokemon1.getAtaque();
-            pokemon2.setVida(pokemon2.getVida() - danoCausado);
-            return pokemon1.getNome()+" causou "+danoCausado+" de dano em "+pokemon2.getNome()+" e agora restou "+pokemon2.getVida();
         }
 
-        return null;
+        pokemon1.setStatus(Status.BATALHANDO);
+
+        if (pokemon1.getVida() <= 0) {
+            throw new RuntimeException("ERRO - POKEMON ESTÁ DESMAIADO E NÃO PODE ATACAR!");
+        }
+        if (pokemon2 == null) {
+            throw new RuntimeException("ERRO - DEVE HAVER UM POKEMON PARA EXECUTAR O ATAQUE");
+        }
+        if (pokemon2.getVida() <= 0){
+            throw new RuntimeException("ERRO - NÃO É POSSIVEL ATACAR UM POKEMON DESMAIADO");
+        }
+
+        danoCausado = pokemon1.getAtaque();
+        pokemon2.setVida(pokemon2.getVida() - danoCausado);
+        return pokemon1.getNome()+" causou "+danoCausado+" de dano em "+pokemon2.getNome()+" e agora restou "+pokemon2.getVida();
+
     }
 
     public String fugir(Long id){

@@ -33,6 +33,10 @@ import java.util.ArrayList;
 public class PokemonController {
 
     PokemonService service = new PokemonService();
+
+    public PokemonController(PokemonService service) {
+        this.service = service;
+    }
     /**
      * Lista de pokemons
      *

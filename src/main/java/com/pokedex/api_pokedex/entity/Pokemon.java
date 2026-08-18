@@ -162,4 +162,29 @@ public class Pokemon {
     public void setTreinador(Treinador treinador) {
         this.treinador = treinador;
     }
+
+    public int atacar() {
+        return ataque;
+    }
+
+    public String fugir(int chance) {
+        if (chance > 50) {
+            return "Fuga concluida com sucesso!";
+        } else {
+            return "O pokemon não conseguiu escapar da batalha";
+        }
+    }
+
+    public String esquivar(int chance) {
+        if (chance > 50) {
+            return "Esquiva concluida com sucesso!";
+        } else {
+            return "O pokemon não conseguiu esquivar";
+        }
+    }
+
+    public String desmaiar(String nomeBateu, String nomeDesmaiou){
+
+        return nomeBateu + " desmaiou o " + nomeDesmaiou + " com seu ataque";
+    }
 }

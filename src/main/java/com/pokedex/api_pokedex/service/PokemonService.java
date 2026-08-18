@@ -5,9 +5,11 @@ import com.pokedex.api_pokedex.enums.Evolucao;
 import com.pokedex.api_pokedex.enums.Status;
 import com.pokedex.api_pokedex.enums.Tipo;
 import com.pokedex.api_pokedex.enums.Treinador;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public class PokemonService {
 
     private ArrayList<Pokemon> pokemons = new ArrayList<>();
@@ -17,7 +19,7 @@ public class PokemonService {
         pokemons.add(new Pokemon(proximoId++,"Pikachu","Pika", Tipo.ELETRICO,null,50,18, Evolucao.SEGUNDA_EVOLUCAO,50,50,100, Treinador.ASH, Status.BATALHANDO));
         pokemons.add(new Pokemon(proximoId++,"Charmander","Cha",Tipo.FOGO,null,50,15,Evolucao.PRIMEIRA_EVOLUCAO,40,40,80,Treinador.CLEMENT,Status.FORA_DE_BATALHA));
         pokemons.add(new Pokemon(proximoId++,"Squartle","Squa",Tipo.AGUA,null,50,16,Evolucao.PRIMEIRA_EVOLUCAO,45,45,90,Treinador.SERENA,Status.FORA_DE_BATALHA));
-        pokemons.add(new Pokemon(proximoId++,"Mewtwo","MewCU",Tipo.PSIQUICO,null,80,50,Evolucao.SEGUNDA_EVOLUCAO,70,70,200,Treinador.ASH,Status.FORA_DE_BATALHA));
+        pokemons.add(new Pokemon(proximoId++,"Mewtwo","MewCU",Tipo.PSIQUICO,null,180,50,Evolucao.SEGUNDA_EVOLUCAO,70,270,380,Treinador.ASH,Status.FORA_DE_BATALHA));
     }
 
     public ArrayList<Pokemon> listarPokemons(){
@@ -186,8 +188,9 @@ public class PokemonService {
         return pokemonMaisforte;
     }
 
+    public void adicionarPokemon(Pokemon pokemon){
+        pokemons.add(pokemon);
+    }
+
     // Novos Métodos
-
-
-
 }

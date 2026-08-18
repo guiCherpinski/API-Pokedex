@@ -147,4 +147,61 @@ public class ArenaService {
         }
         return null;
     }
+
+    public String evoluirPokemon (Long id, Pokemon pokemon) {
+
+        String nome = "";
+
+        for (Pokemon p : pokemonService.listarPokemons()) {
+            if (id.equals(p.getId())) {
+
+                nome = p.getNome();
+
+                if (p.getEvolucao() == Evolucao.MEGA_EVOLUCAO) {
+                    throw new RuntimeException("ERRO - IMPOSSIVEL EVOLUIR UMA MEGA EVOLUÇÃO");
+                }
+
+                if (p.getEvolucao() == Evolucao.BASE) {
+                    p.setNome(pokemon.getNome());
+                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
+                    p.setAtaque(pokemon.getAtaque());
+                    p.setVida(pokemon.getVida());
+                    p.setDefesa(pokemon.getDefesa());
+                    p.setTipo2(pokemon.getTipo2());
+                    p.setVelocidade(pokemon.getVelocidade());
+                    p.setApelido(pokemon.getApelido());
+
+                    return nome + " evoluiu para " + pokemon.getNome();
+                }
+
+                if (p.getEvolucao() == Evolucao.PRIMEIRA_EVOLUCAO) {
+                    p.setNome(pokemon.getNome());
+                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
+                    p.setAtaque(pokemon.getAtaque());
+                    p.setVida(pokemon.getVida());
+                    p.setDefesa(pokemon.getDefesa());
+                    p.setTipo2(pokemon.getTipo2());
+                    p.setVelocidade(pokemon.getVelocidade());
+                    p.setApelido(pokemon.getApelido());
+
+                    return nome + " evoluiu para " + pokemon.getNome();
+                }
+
+                if (p.getEvolucao() == Evolucao.SEGUNDA_EVOLUCAO) {
+                    p.setNome(pokemon.getNome());
+                    p.setEvolucao(Evolucao.PRIMEIRA_EVOLUCAO);
+                    p.setAtaque(pokemon.getAtaque());
+                    p.setVida(pokemon.getVida());
+                    p.setDefesa(pokemon.getDefesa());
+                    p.setTipo2(pokemon.getTipo2());
+                    p.setVelocidade(pokemon.getVelocidade());
+                    p.setApelido(pokemon.getApelido());
+
+                    return nome + " evoluiu para " + pokemon.getNome();
+                }
+            }
+        }
+
+        return null;
+    }
 }

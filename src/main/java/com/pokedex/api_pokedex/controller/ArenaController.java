@@ -34,4 +34,9 @@ public class ArenaController {
     public String usarItem(@RequestBody Item item , @PathVariable Long id) {
         return arenaService.usarItem(id,item);
     }
+
+    @PatchMapping("/evoluir-pokemon/{id}")
+    public String evoluirPokemon(@PathVariable Long id, @RequestBody Pokemon pokemon) {
+        return arenaService.evoluirPokemon(id,pokemon);
+    }
 }

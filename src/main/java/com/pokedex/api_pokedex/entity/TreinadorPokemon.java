@@ -1,6 +1,7 @@
 package com.pokedex.api_pokedex.entity;
 
 import com.pokedex.api_pokedex.enums.Direcao;
+import com.pokedex.api_pokedex.enums.Loja;
 import com.pokedex.api_pokedex.enums.Time;
 
 import java.util.ArrayList;
@@ -12,20 +13,34 @@ public class TreinadorPokemon {
     private String regiao;
     private ArrayList<Pokemon> pokemons;
     private Time time;
+    private int moedas;
+    private Loja loja;
 
-    public TreinadorPokemon(Long id, String nome, String regiao, ArrayList<Pokemon> pokemons, Time time) {
+    public TreinadorPokemon(Long id, String nome, String regiao, ArrayList<Pokemon> pokemons, Time time,int moedas,Loja loja) {
         this.id = id;
         this.nome = nome;
         this.regiao = regiao;
         this.pokemons = pokemons;
         this.time = time;
+        this.moedas = moedas;
+        this.loja = loja;
     }
 
-    public TreinadorPokemon(String nome, String regiao, ArrayList<Pokemon> pokemons, Time time) {
+    public TreinadorPokemon(String nome, String regiao, ArrayList<Pokemon> pokemons, Time time,int moedas,Loja loja) {
         this.nome = nome;
         this.regiao = regiao;
         this.pokemons = pokemons;
         this.time = time;
+        this.moedas = moedas;
+        this.loja = loja;
+    }
+
+    public int getMoedas() {
+        return moedas;
+    }
+
+    public void setMoedas(int moedas) {
+        this.moedas = moedas;
     }
 
     public Time getTime() {

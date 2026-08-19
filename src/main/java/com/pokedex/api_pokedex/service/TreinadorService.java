@@ -3,6 +3,7 @@ package com.pokedex.api_pokedex.service;
 import com.pokedex.api_pokedex.entity.Pokemon;
 import com.pokedex.api_pokedex.entity.TreinadorPokemon;
 import com.pokedex.api_pokedex.enums.Direcao;
+import com.pokedex.api_pokedex.enums.Loja;
 import com.pokedex.api_pokedex.enums.Time;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +24,9 @@ public class TreinadorService {
     static Long proximoId = 1L;
 
     public TreinadorService() {
-        treinadores.add(new TreinadorPokemon(proximoId++,"ASH","Pallet",null, Time.RED));
-        treinadores.add(new TreinadorPokemon(proximoId++,"BROCK","Kanto",null,Time.BLUE));
-        treinadores.add(new TreinadorPokemon(proximoId++,"SERENA","Hoenn",null,null));
+        treinadores.add(new TreinadorPokemon(proximoId++,"ASH","Pallet",null, Time.RED,50,null));
+        treinadores.add(new TreinadorPokemon(proximoId++,"BROCK","Kanto",null,Time.BLUE,100,null));
+        treinadores.add(new TreinadorPokemon(proximoId++,"SERENA","Hoenn",null,null,200,null));
     }
 
     public ArrayList<TreinadorPokemon> listarTreinadores() {
@@ -120,6 +121,27 @@ public class TreinadorService {
             return e.getMessage();
         }
 
+        return null;
+    }
+
+    public String comprarItem(Long id , Loja loja){
+
+        try{
+            for (TreinadorPokemon t : treinadores){
+                if (id.equals(t.getId())){
+
+                    if (t.getMoedas() < loja.getPreco()){
+                        throw new RuntimeException("ERRO - O treinador não tem moedas suficientes para comprar");
+                    }
+
+                }
+            }
+
+
+
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 }

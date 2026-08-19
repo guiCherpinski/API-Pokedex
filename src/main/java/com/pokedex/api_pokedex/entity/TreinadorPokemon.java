@@ -76,5 +76,11 @@ public class TreinadorPokemon {
         return "Agora "+ nomeTreinador + " pertence ao time " + time;
     }
 
-
+    public String capturarPokemon (String nomePokemon, int chance) {
+        if (chance > 50) {
+            return nomePokemon + " foi capturado com sucesso!";
+        } else {
+            return nomePokemon + " escapou da pokebola";
+        }
+    }
 }

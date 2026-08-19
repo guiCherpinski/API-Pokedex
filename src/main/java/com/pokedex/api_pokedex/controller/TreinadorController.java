@@ -1,5 +1,6 @@
 package com.pokedex.api_pokedex.controller;
 
+import com.pokedex.api_pokedex.entity.Pokemon;
 import com.pokedex.api_pokedex.enums.Direcao;
 import com.pokedex.api_pokedex.enums.Time;
 import com.pokedex.api_pokedex.service.ArenaService;
@@ -24,5 +25,10 @@ public class TreinadorController {
     @PutMapping("/time/{id}")
     public String timeTreinador(@PathVariable Long id, @RequestBody Time time){
         return treinadorService.time(id,time);
+    }
+
+    @PostMapping("/capturar-pokemon")
+    public String capturarPokemon (@RequestBody Pokemon pokemon) {
+        return treinadorService.capturarPokemon(pokemon);
     }
 }

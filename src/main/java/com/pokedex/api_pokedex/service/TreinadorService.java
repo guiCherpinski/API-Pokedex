@@ -7,11 +7,19 @@ import com.pokedex.api_pokedex.enums.Time;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 @Service
 public class TreinadorService {
 
     private ArrayList<TreinadorPokemon> treinadores = new ArrayList<>();
+    private PokemonService pokemonService = new PokemonService();
+
+
+    private ArrayList<Pokemon> pokemoins = new ArrayList<>();
+
+
+    private Random gerador = new Random();
     static Long proximoId = 1L;
 
     public TreinadorService() {
@@ -89,6 +97,29 @@ public class TreinadorService {
         } catch (RuntimeException e){
             return e.getMessage();
         }
+        return null;
+    }
+    public String capturarPokemon (Pokemon pokemon) {
+
+        try {
+
+            int x = gerador.nextInt(100);
+
+            for (TreinadorPokemon t : treinadores) {
+                if (x > 50) {
+                    pokemoins.add(pokemon);
+                    t.setPokemons(pokemoins);
+                    pokemonService.cadastrarPokemon(pokemon);
+                    return t.capturarPokemon(pokemon.getNome(),x);
+                } else {
+                    throw new RuntimeException(t.capturarPokemon(pokemon.getNome(), x));
+                }
+            }
+
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
+
         return null;
     }
 }

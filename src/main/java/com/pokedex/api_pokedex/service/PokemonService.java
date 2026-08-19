@@ -39,6 +39,7 @@ public class PokemonService {
     }
 
     public Pokemon cadastrarPokemon(Pokemon pokemon){
+        pokemon.setId(proximoId++);
         pokemons.add(pokemon);
         return pokemon;
     }

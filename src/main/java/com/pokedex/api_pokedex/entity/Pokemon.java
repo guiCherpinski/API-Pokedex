@@ -1,20 +1,37 @@
 package com.pokedex.api_pokedex.entity;
 
 import com.pokedex.api_pokedex.enums.*;
+import jakarta.persistence.*;
 
+@Entity
 public class Pokemon {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String apelido;
+
+    @Enumerated(EnumType.STRING)
     private Tipo tipo1;
+
+    @Enumerated(EnumType.STRING)
     private Tipo tipo2;
+
     private int vida;
     private int nivel;
+
+    @Enumerated(EnumType.STRING)
     private Evolucao evolucao;
+
     private int defesa;
     private int ataque;
     private int velocidade;
+
+    @ManyToOne
+    @JoinColumn(name = "treinador_id")
     private TreinadorPokemon treinador;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Pokemon () {

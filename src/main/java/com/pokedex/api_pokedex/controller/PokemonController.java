@@ -4,14 +4,23 @@ package com.pokedex.api_pokedex.controller;
 import com.pokedex.api_pokedex.entity.Pokemon;
 import com.pokedex.api_pokedex.enums.Candys;
 import com.pokedex.api_pokedex.enums.Direcao;
+import com.pokedex.api_pokedex.repository.PokemonRepository;
 import com.pokedex.api_pokedex.service.PokemonService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 @Tag(
         name = "Pokedex",
@@ -30,10 +39,12 @@ import java.util.ArrayList;
 @RequestMapping("/v1/pokemons")
 public class PokemonController {
 
-    PokemonService service = new PokemonService();
+    private final PokemonService service;
+    private final PokemonRepository pokemonRepository;
 
-    public PokemonController(PokemonService service) {
+    public PokemonController(PokemonService service , PokemonRepository pokemonRepository) {
         this.service = service;
+        this.pokemonRepository = pokemonRepository;
     }
     /**
      * Lista de pokemons
@@ -56,10 +67,14 @@ public class PokemonController {
             responseCode = "400",
             description = "Dados inválidos"
     )
+
+
     @GetMapping()
-    public ArrayList<Pokemon> listarPokemons() {
+    public List<Pokemon> listarPokemons() {
         return service.listarPokemons();
     }
+
+
 
     /**
      * Buscar o pokemon que deseja pelo ID
@@ -71,9 +86,9 @@ public class PokemonController {
      * @return irá retornar o pokemon que foi solicitado
      **/
     @Operation(
-            summary = "Buscar pokemon pelo ID",
-            description = "Busca o pokemon pelo ID e o retorna para visualização"
-    )
+           summary = "Buscar pokemon pelo ID",
+            description = "Busca o pokemon pelo ID e o retorna para visualização")
+
     @ApiResponse(
             responseCode = "200",
             description = "Pokemon encontrado com sucesso"
@@ -82,10 +97,14 @@ public class PokemonController {
             responseCode = "400",
             description = "Pokemon não encontrado"
     )
+
+
     @GetMapping("/{id}")
-    public Pokemon buscarPokemonId(@PathVariable Long id) {
+    public Optional<Pokemon> buscarPokemonId(@PathVariable Long id) {
         return service.buscarPokemonId(id);
     }
+
+
 
     /**
      * Cadastrar um novo Pokemon
@@ -107,6 +126,8 @@ public class PokemonController {
             responseCode = "400",
             description = "Erro ao cadastrar"
     )
+
+
     @PostMapping()
     public Pokemon cadastrarPokemon(@RequestBody Pokemon pokemon){
         return service.cadastrarPokemon(pokemon);
@@ -159,35 +180,35 @@ public class PokemonController {
             description = "Erro ao deletar"
     )
     @DeleteMapping("/{id}")
-    public Pokemon deletarPokemon (@PathVariable Long id) {
+    public String deletarPokemon (@PathVariable Long id) {
         return service.deletarPokemon(id);
     }
 
-    /**
-     * Listar os pokemons por um tipo
-     *
-     * <p>Todos os pokemons que estão relacionados com o tipo selecionado
-     * seram exibidos em uma lista</p>
-     *
-     * @param tipo tipo utilizado para buscar os pokemons que estão relacionados'
-     * @return irá retornar os pokemons relacionados em uma lista
-     **/
-    @Operation(
-            summary = "Lista pokemons por tipo",
-            description = "Lista os pokemons pelo tipo determinado"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Sucesso ao listar"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Erro ao listar"
-    )
-    @GetMapping("/tipo")
-    public ArrayList<Pokemon> listarPokemonsTipo (@RequestParam String tipo) {
-        return service.listarPokemonsTipo(tipo);
-    }
+   /**
+    * Listar os pokemons por um tipo
+    *
+    * <p>Todos os pokemons que estão relacionados com o tipo selecionado
+    * seram exibidos em uma lista</p>
+    *
+    * @param tipo tipo utilizado para buscar os pokemons que estão relacionados'
+    * @return irá retornar os pokemons relacionados em uma lista
+    **/
+   @Operation(
+           summary = "Lista pokemons por tipo",
+           description = "Lista os pokemons pelo tipo determinado"
+   )
+   @ApiResponse(
+           responseCode = "200",
+           description = "Sucesso ao listar"
+   )
+   @ApiResponse(
+           responseCode = "400",
+           description = "Erro ao listar"
+   )
+   @GetMapping("/tipo")
+   public List<Pokemon> listarPokemonsTipo (@RequestParam String tipo) {
+       return service.listarPokemonsTipo(tipo);
+   }
 
     /**
      * Listar um pokemon por um nome
@@ -211,61 +232,35 @@ public class PokemonController {
             description = "Erro ao listar"
     )
     @GetMapping("/nome")
-    public Pokemon listarPokemonsNome(@RequestParam String nome){
+    public List<Pokemon> listarPokemonsNome(@RequestParam String nome){
         return service.listarPokemonsNome(nome);
     }
 
-    /**
-     * Listar um pokemon por um nivel
-     *
-     * <p>Todos os pokemons que estão relacionados com o nivel selecionado
-     * serão exibido em uma lista</p>
-     *
-     * @param nivel nivel utilizado para buscar o pokemon que está relacionado'
-     * @return irá retornar um pokemon relacionado com o nivel
-     **/
-    @Operation(
-            summary = "Lista pokemons por nivel",
-            description = "Lista o pokemon apartir do nivel determinado"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Sucesso ao listar"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Erro ao listar"
-    )
-    @GetMapping("/nivel")
-    public ArrayList<Pokemon> listarPorNivel(@RequestParam int nivel){
-        return service.listarPorNivel(nivel);
-    }
-
-    /**
-     * Atualiza o nivel do pokemon
-     *
-     * <p>O pokemon que o usuario solicitar , poderá ter o seu nivel
-     * alterado se for do seu agrado</p>
-     *
-     * @param id id utilizado para atualizar o pokemon solicitado'
-     * @return irá retornar um pokemon atualizado para a lista
-     **/
-    @Operation(
-            summary = "Atualiza o nivel do pokemon",
-            description = "Este método altera o nivel do pokemon para o nivel determinado"
-    )
-    @ApiResponse(
-            responseCode = "200",
-            description = "Sucesso ao atualizar"
-    )
-    @ApiResponse(
-            responseCode = "400",
-            description = "Erro ao atualizar"
-    )
-    @PatchMapping("{id}/nivel")
-    public Pokemon atualizarONivel(@PathVariable Long id, @RequestBody Pokemon pokemon){
-        return service.atualizarONivel(id, pokemon);
-    }
+  /**
+   * Listar um pokemon por um nivel
+   *
+   * <p>Todos os pokemons que estão relacionados com o nivel selecionado
+   * serão exibido em uma lista</p>
+   *
+   * @param nivel nivel utilizado para buscar o pokemon que está relacionado'
+   * @return irá retornar um pokemon relacionado com o nivel
+   **/
+  @Operation(
+          summary = "Lista pokemons por nivel",
+          description = "Lista o pokemon apartir do nivel determinado"
+  )
+  @ApiResponse(
+          responseCode = "200",
+          description = "Sucesso ao listar"
+  )
+  @ApiResponse(
+          responseCode = "400",
+          description = "Erro ao listar"
+  )
+  @GetMapping("/nivel")
+  public List<Pokemon> listarPorNivel(@RequestParam int nivel){
+      return service.listarPorNivel(nivel);
+  }
 
     /**
      * Atualiza a vida do pokemon
@@ -294,34 +289,6 @@ public class PokemonController {
     }
 
     /**
-     * Atualiza a evolução do pokemon
-     *
-     * <p>O pokemon que o usuario solicitar , poderá ter o sua evolução
-     * alterada se for do seu agrado</p>
-     *
-     * @param id id utilizado para atualizar o pokemon solicitado'
-     * @return irá retornar um pokemon atualizado para a lista
-     **/
-    @Operation(
-            summary = "Evoluir pokemons",
-            description = "Evolui o pokemon de acordo com a fase determinada"
-    )
-    @ApiResponses({
-            @ApiResponse(
-                    responseCode = "200",
-                    description = "Sucesso ao evoluir"
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Erro ao evoluir"
-            )
-    })
-    @PostMapping("{id}/evoluir")
-    public Pokemon evouluirPokemon (@PathVariable Long id, @RequestBody Pokemon pokemon){
-        return service.evouluirPokemon(id, pokemon);
-    }
-
-    /**
      * Pokemon mais forte
      *
      * <p>O pokemon que tiver o maior ataque de todos , será
@@ -347,7 +314,6 @@ public class PokemonController {
     public Pokemon pokemonMaisForte() {
         return service.pokemonMaisForte();
     }
-
     @PatchMapping("/evoluir-pokemon/{id}")
     public String evoluirPokemon(@PathVariable Long id, @RequestBody Pokemon pokemon) {
         return service.evoluirPokemon(id,pokemon);

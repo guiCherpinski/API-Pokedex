@@ -14,8 +14,11 @@ import java.util.Random;
 public class TreinadorService {
 
     private ArrayList<TreinadorPokemon> treinadores = new ArrayList<>();
-    private PokemonService pokemonService = new PokemonService();
+    private final PokemonService pokemonService;
 
+    public TreinadorService (PokemonService pokemonService) {
+        this.pokemonService = pokemonService;
+    }
 
     private ArrayList<Pokemon> pokemoins = new ArrayList<>();
 
@@ -23,11 +26,6 @@ public class TreinadorService {
     private Random gerador = new Random();
     static Long proximoId = 1L;
 
-    public TreinadorService() {
-        treinadores.add(new TreinadorPokemon(proximoId++,"ASH","Pallet",null, Time.RED,50,null));
-        treinadores.add(new TreinadorPokemon(proximoId++,"BROCK","Kanto",null,Time.BLUE,100,null));
-        treinadores.add(new TreinadorPokemon(proximoId++,"SERENA","Hoenn",null,null,200,null));
-    }
 
     public ArrayList<TreinadorPokemon> listarTreinadores() {
         return treinadores;
@@ -100,29 +98,29 @@ public class TreinadorService {
         }
         return null;
     }
-    public String capturarPokemon (Pokemon pokemon) {
-
-        try {
-
-            int x = gerador.nextInt(100);
-
-            for (TreinadorPokemon t : treinadores) {
-                if (x > 50) {
-                    pokemoins.add(pokemon);
-                    t.setPokemons(pokemoins);
-                    pokemonService.cadastrarPokemon(pokemon);
-                    return t.capturarPokemon(pokemon.getNome(),x);
-                } else {
-                    throw new RuntimeException(t.capturarPokemon(pokemon.getNome(), x));
-                }
-            }
-
-        } catch (RuntimeException e) {
-            return e.getMessage();
-        }
-
-        return null;
-    }
+    //public String capturarPokemon (Pokemon pokemon) {
+//
+    //    try {
+//
+    //        int x = gerador.nextInt(100);
+//
+    //        for (TreinadorPokemon t : treinadores) {
+    //            if (x > 50) {
+    //                pokemoins.add(pokemon);
+    //                t.setPokemons(pokemoins);
+    //                pokemonService.cadastrarPokemon(pokemon);
+    //                return t.capturarPokemon(pokemon.getNome(),x);
+    //            } else {
+    //                throw new RuntimeException(t.capturarPokemon(pokemon.getNome(), x));
+    //            }
+    //        }
+//
+    //    } catch (RuntimeException e) {
+    //        return e.getMessage();
+    //    }
+//
+    //    return null;
+    //}
 
     public String comprarItem(Long id , Loja loja){
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/pokedex")
 public class ArenaController {
 
-    ArenaService arenaService = new ArenaService();
+    private final ArenaService arenaService;
 
     public ArenaController(ArenaService arenaService) {
         this.arenaService = arenaService;

@@ -1,18 +1,38 @@
 package com.pokedex.api_pokedex.entity;
 
 import com.pokedex.api_pokedex.enums.Tipo;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class Arena {
-    private int id;
-    private String nome;
-    private Tipo tipoArena;
-    private TreinadorPokemon lider;
-    private TreinadorPokemon treinador;
-    private ArrayList<Pokemon> pokemons;
 
-    public Arena(int id, String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, ArrayList<Pokemon> pokemons) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String nome;
+
+    @Enumerated(EnumType.STRING)
+    private Tipo tipoArena;
+
+    @OneToOne
+    @JoinColumn(name = "treinador_lider_id")
+    private TreinadorPokemon lider;
+
+    @ManyToOne
+    @JoinColumn(name = "treinador_id")
+    private TreinadorPokemon treinador;
+
+    @OneToMany
+    @JoinColumn(name = "arena_id")
+    private List<Pokemon> pokemons;
+
+    public Arena() {
+    }
+
+    public Arena(int id, String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, List<Pokemon> pokemons) {
         this.id = id;
         this.nome = nome;
         this.tipoArena = tipoArena;
@@ -21,7 +41,7 @@ public class Arena {
         this.pokemons = pokemons;
     }
 
-    public Arena(String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, ArrayList<Pokemon> pokemons) {
+    public Arena(String nome, Tipo tipoArena, TreinadorPokemon lider, TreinadorPokemon treinador, List<Pokemon> pokemons) {
         this.nome = nome;
         this.tipoArena = tipoArena;
         this.lider = lider;
@@ -69,11 +89,11 @@ public class Arena {
         this.treinador = treinador;
     }
 
-    public ArrayList<Pokemon> getPokemons() {
+    public List<Pokemon> getPokemons() {
         return pokemons;
     }
 
-    public void setPokemons(ArrayList<Pokemon> pokemons) {
+    public void setPokemons(List<Pokemon> pokemons) {
         this.pokemons = pokemons;
     }
 }

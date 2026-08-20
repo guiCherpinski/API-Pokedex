@@ -11,24 +11,24 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/treinador")
 public class TreinadorController {
 
-    TreinadorService treinadorService = new TreinadorService();
+    private final TreinadorService treinadorService;
 
     public TreinadorController(TreinadorService treinadorService) {
         this.treinadorService = treinadorService;
     }
 
-    @PutMapping("/movimentar/{id}")
-    public String movimentarTreinador(@PathVariable Long id, @RequestBody Direcao direcao){
-        return treinadorService.movimentar(id,direcao);
-    }
-
-    @PutMapping("/time/{id}")
-    public String timeTreinador(@PathVariable Long id, @RequestBody Time time){
-        return treinadorService.time(id,time);
-    }
-
-    @PostMapping("/capturar-pokemon")
-    public String capturarPokemon (@RequestBody Pokemon pokemon) {
-        return treinadorService.capturarPokemon(pokemon);
-    }
+    //@PutMapping("/movimentar/{id}")
+    //public String movimentarTreinador(@PathVariable Long id, @RequestBody Direcao direcao){
+    //    return treinadorService.movimentar(id,direcao);
+    //}
+//
+    //@PutMapping("/time/{id}")
+    //public String timeTreinador(@PathVariable Long id, @RequestBody Time time){
+    //    return treinadorService.time(id,time);
+    //}
+//
+    //@PostMapping("/capturar-pokemon")
+    //public String capturarPokemon (@RequestBody Pokemon pokemon) {
+    //    return treinadorService.capturarPokemon(pokemon);
+    //}
 }

@@ -9,8 +9,13 @@ import java.util.Random;
 @Service
 public class ArenaService {
 
-    PokemonService pokemonService = new PokemonService();
+    private final PokemonService pokemonService;
     Random gerador = new Random();
+
+    public ArenaService (PokemonService pokemonService) {
+        this.pokemonService = pokemonService;
+    }
+
     static Pokemon pokemon2 = new Pokemon(67L,"Rayquaza","Verdão", Tipo.DRAGAO
             ,Tipo.VOADOR,230,70, Evolucao.MEGA_EVOLUCAO,80,110,370, null, Status.BATALHANDO);
 
